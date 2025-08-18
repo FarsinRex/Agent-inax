@@ -1,0 +1,30 @@
+/* markdown.css */
+.markdown-content h1, .markdown-content h2, .markdown-content h3 {
+  font-weight: bold;
+  margin-top: 1em;
+}
+.markdown-content ul {
+  margin-left: 1.5em;
+  list-style-type: disc;
+}
+.markdown-content strong {
+  color: #222;
+}
+/* ...add more as needed */
+
+/* Responsive markdown tables */
+.markdown-content table {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  border-collapse: collapse;
+}
+.markdown-content table th,
+.markdown-content table td {
+  border: 1px solid rgba(0,0,0,0.1);
+  padding: 0.5rem;
+}
+.dark .markdown-content table th,
+.dark .markdown-content table td {
+  border-color: rgba(255,255,255,0.12);
+}

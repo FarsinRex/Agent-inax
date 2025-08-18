@@ -1,0 +1,17 @@
+version: "3.9"
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "5000:5000"
+    container_name: backend_container
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:5000
+    container_name: frontend_container
+    depends_on:
+      - backend
