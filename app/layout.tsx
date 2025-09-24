@@ -13,13 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-<<<<<<< HEAD
   title: "Agent Inax - AI Chat Assistant",
   description: "AI-powered chat assistant for tech support and assistance",
-=======
-  title: "Agent Inax",
-  description: "OpenAI powered support and assistance bot",
->>>>>>> 3557005c14105039284ceab00bff3a59db0088a4
 };
 
 export default function RootLayout({

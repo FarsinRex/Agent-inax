@@ -161,12 +161,8 @@ export default function ChatBox() {
                   remarkPlugins={[remarkGfm]}
                   rehypePlugins={[rehypeRaw]}
                   components={{
-<<<<<<< HEAD
                     // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     code: ({ inline, children, ...props }: any) => {
-=======
-                    code({ inline, children, ...props }: any) => {
->>>>>>> 3557005c14105039284ceab00bff3a59db0088a4
                       return !inline ? (
                         <pre className="bg-neutral-900 text-white p-3 rounded overflow-x-auto text-xs">
                           <code {...props}>{children}</code>
