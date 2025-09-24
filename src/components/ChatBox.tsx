@@ -161,7 +161,7 @@ export default function ChatBox() {
                   remarkPlugins={[remarkGfm]}
                   rehypePlugins={[rehypeRaw]}
                   components={{
-                    code({ inline, children, ...props }: any) {
+                    code({ inline, children, ...props }: any) => {
                       return !inline ? (
                         <pre className="bg-neutral-900 text-white p-3 rounded overflow-x-auto text-xs">
                           <code {...props}>{children}</code>
