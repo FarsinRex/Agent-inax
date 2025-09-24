@@ -31,26 +31,3 @@ body {
     padding-right: 1rem;
   }
 }
-
-/* Subtle corner glows */
-.corner-glow::before,
-.corner-glow::after {
-  content: "";
-  position: fixed; /* lock to viewport */
-  width: 55vw;
-  height: 55vw;
-  max-width: 900px;
-  max-height: 900px;
-  background: radial-gradient(circle at center, rgba(249, 115, 22, 0.15), transparent 65%);
-  pointer-events: none;
-  filter: blur(24px);
-  z-index: 0;
-}
-.corner-glow::before {
-  top: -10vw;
-  left: -10vw;
-}
-.corner-glow::after {
-  bottom: -10vw;
-  right: -10vw;
-}

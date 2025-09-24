@@ -21,6 +21,7 @@ export default function ChatBox() {
   const [showOptions, setShowOptions] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://15.207.108.190';
 
   // Auto-scroll to bottom when new messages arrive
   const scrollToBottom = () => {
@@ -53,7 +54,7 @@ export default function ChatBox() {
     setError(null);
 
     try {
-      const res = await fetch('http://localhost:5000/chat', {
+      const res = await fetch('${API_URL}/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: userMessage }),
@@ -100,10 +101,15 @@ export default function ChatBox() {
     setError(null);
   };
 
+  const handleFileUpload = (file: File, type: string) => {
+    console.log(`File uploaded: ${file.name}, type: ${type}`);
+    // TODO: Implement file upload functionality
+  };
+
   return (
-    <div className="border border-orange-100 dark:border-brand-900/40 p-4 rounded-xl shadow-lg bg-white dark:bg-neutral-900 max-w-4xl mx-auto">
+    <div className="flex flex-col h-screen max-w-4xl mx-auto bg-white dark:bg-neutral-900">
       {/* Header */}
-      <div className="flex justify-between items-center mb-4 pb-2 border-b border-orange-100 dark:border-brand-900/40">
+      <div className="flex justify-between items-center p-4 border-b border-orange-100 dark:border-brand-900/40 bg-white dark:bg-neutral-900">
         <h2 className="text-lg font-semibold text-gray-800 dark:text-white sr-only">Agent Inax</h2>
         {messages.length > 0 && (
           <button
@@ -115,8 +121,8 @@ export default function ChatBox() {
         )}
       </div>
 
-      {/* Messages */}
-      <div className="h-96 overflow-y-auto space-y-4 mb-4 text-sm pr-2 scrollbar-thin scrollbar-thumb-orange-200 dark:scrollbar-thumb-brand-800">
+      {/* Messages Container - Takes remaining space */}
+      <div className="flex-1 overflow-y-auto space-y-4 p-4 pb-2 text-sm scrollbar-thin scrollbar-thumb-orange-200 dark:scrollbar-thumb-brand-800">
         {messages.length === 0 && (
           <div className="text-center py-12">
             <div className="flex justify-center mb-3">
@@ -200,8 +206,9 @@ export default function ChatBox() {
         </div>
       )}
 
-      {/* Input + Attach */}
-      <form onSubmit={handleSubmit} className="flex space-x-2 items-center relative">
+      {/* Fixed Input at Bottom */}
+      <div className="border-t border-orange-100 dark:border-brand-900/40 bg-white dark:bg-neutral-900 p-4 pb-8">
+        <form onSubmit={handleSubmit} className="flex space-x-2 items-center relative">
         {/* Attach Button */}
         <div className="relative">
           <button
@@ -303,7 +310,15 @@ export default function ChatBox() {
             'Send'
           )}
         </button>
-      </form>
+        </form>
+        
+        {/* Disclaimer Message */}
+        <div className="mt-3 text-center">
+          <p className="text-xs text-gray-500 dark:text-gray-400">
+            AI models can make mistakes, check for important info
+          </p>
+        </div>
+      </div>
     </div>
   );
 }
