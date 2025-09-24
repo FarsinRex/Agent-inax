@@ -12,7 +12,7 @@ interface Message {
   content: string;
   timestamp: Date;
 }
-
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 export default function ChatBox() {
   const [input, setInput] = useState('');
   const [messages, setMessages] = useState<Message[]>([]);
@@ -21,7 +21,6 @@ export default function ChatBox() {
   const [showOptions, setShowOptions] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-  const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://15.207.108.190';
 
   // Auto-scroll to bottom when new messages arrive
   const scrollToBottom = () => {
@@ -54,7 +53,7 @@ export default function ChatBox() {
     setError(null);
 
     try {
-      const res = await fetch('${API_URL}/chat', {
+      const res = await fetch(`${API_URL}/chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: userMessage }),
@@ -107,22 +106,24 @@ export default function ChatBox() {
   };
 
   return (
-    <div className="flex flex-col h-screen max-w-4xl mx-auto bg-white dark:bg-neutral-900">
-      {/* Header */}
-      <div className="flex justify-between items-center p-4 border-b border-orange-100 dark:border-brand-900/40 bg-white dark:bg-neutral-900">
-        <h2 className="text-lg font-semibold text-gray-800 dark:text-white sr-only">Agent Inax</h2>
-        {messages.length > 0 && (
-          <button
-            onClick={clearChat}
-            className="text-sm text-gray-500 hover:text-red-500 dark:text-gray-400 dark:hover:text-red-400 transition-colors"
-          >
-            Clear Chat
-          </button>
-        )}
-      </div>
+    <div className="flex flex-col h-[90vh] max-w-4xl mx-auto mt-16">
+      {/* Chat Container with Border */}
+      <div className="flex-1 bg-white dark:bg-neutral-900 border border-orange-100 dark:border-brand-900/40 rounded-xl shadow-lg flex flex-col min-h-0">
+        {/* Header */}
+        <div className="flex justify-between items-center p-4 border-b border-orange-100 dark:border-brand-900/40 bg-white dark:bg-neutral-900 rounded-t-xl">
+          <h2 className="text-lg font-semibold text-gray-800 dark:text-white sr-only">Agent Inax</h2>
+          {messages.length > 0 && (
+            <button
+              onClick={clearChat}
+              className="text-sm text-gray-500 hover:text-red-500 dark:text-gray-400 dark:hover:text-red-400 transition-colors"
+            >
+              Clear Chat
+            </button>
+          )}
+        </div>
 
-      {/* Messages Container - Takes remaining space */}
-      <div className="flex-1 overflow-y-auto space-y-4 p-4 pb-2 text-sm scrollbar-thin scrollbar-thumb-orange-200 dark:scrollbar-thumb-brand-800">
+        {/* Messages Container - Takes remaining space */}
+        <div className="flex-1 overflow-y-auto space-y-4 p-4 pb-2 text-sm scrollbar-thin scrollbar-thumb-orange-200 dark:scrollbar-thumb-brand-800 min-h-0">
         {messages.length === 0 && (
           <div className="text-center py-12">
             <div className="flex justify-center mb-3">
@@ -197,17 +198,18 @@ export default function ChatBox() {
         )}
         
         <div ref={messagesEndRef} />
+        
+        {/* Error Display */}
+        {error && (
+          <div className="mb-4 p-3 bg-red-100 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+            <p className="text-red-700 dark:text-red-400 text-sm">{error}</p>
+          </div>
+        )}
+        </div>
       </div>
 
-      {/* Error */}
-      {error && (
-        <div className="mb-4 p-3 bg-red-100 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
-          <p className="text-red-700 dark:text-red-400 text-sm">{error}</p>
-        </div>
-      )}
-
-      {/* Fixed Input at Bottom */}
-      <div className="border-t border-orange-100 dark:border-brand-900/40 bg-white dark:bg-neutral-900 p-4 pb-8">
+      {/* Standalone Input Area */}
+      <div className="bg-white dark:bg-neutral-900 p-4 pb-8">
         <form onSubmit={handleSubmit} className="flex space-x-2 items-center relative">
         {/* Attach Button */}
         <div className="relative">
