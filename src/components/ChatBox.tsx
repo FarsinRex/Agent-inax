@@ -106,7 +106,7 @@ export default function ChatBox() {
   };
 
   return (
-    <div className="flex flex-col h-[90vh] max-w-4xl mx-auto mt-16">
+    <div className="flex flex-col h-[81vh] max-w-4xl mx-auto mt-20 mb-8">
       {/* Chat Container with Border */}
       <div className="flex-1 bg-white dark:bg-neutral-900 border border-orange-100 dark:border-brand-900/40 rounded-xl shadow-lg flex flex-col min-h-0">
         {/* Header */}
@@ -161,7 +161,8 @@ export default function ChatBox() {
                   remarkPlugins={[remarkGfm]}
                   rehypePlugins={[rehypeRaw]}
                   components={{
-                    code({ inline, children, ...props }: any) {
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    code: ({ inline, children, ...props }: any) => {
                       return !inline ? (
                         <pre className="bg-neutral-900 text-white p-3 rounded overflow-x-auto text-xs">
                           <code {...props}>{children}</code>
